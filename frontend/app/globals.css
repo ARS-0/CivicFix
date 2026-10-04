@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { background: #F4F5F0; }
+body { @apply font-sans text-ink antialiased; }
+h1, h2, h3 { @apply font-display tracking-tight; }
+:focus-visible { outline: 3px solid #1F5FA8; outline-offset: 2px; border-radius: 4px; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply bg-road text-white hover:bg-roadDark; }
+  .btn-signal { @apply bg-signal text-ink hover:brightness-95; }
+  .btn-ghost { @apply border border-line bg-white text-ink hover:bg-paper; }
+  .field { @apply w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm placeholder:text-mute/70; }
+  .label { @apply mb-1 block text-sm font-medium; }
+  .panel { @apply rounded-lg border border-line bg-white; }
+}
+
+.cf-pin { display:block; width:18px; height:18px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.4); }
+.cf-pin.sel { width:26px; height:26px; box-shadow:0 0 0 3px #F2B705, 0 2px 6px rgba(0,0,0,.5); }
+.leaflet-container { font-family: inherit; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@keyframes shimmer { 0% { background-position: -200px 0 } 100% { background-position: 200px 0 } }
+.skeleton { background: linear-gradient(90deg,#e8ebe3 25%,#f4f5f0 50%,#e8ebe3 75%); background-size: 400px 100%; animation: shimmer 1.2s infinite linear; border-radius: 6px; }

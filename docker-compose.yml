@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment: { POSTGRES_USER: civicfix, POSTGRES_PASSWORD: civicfix, POSTGRES_DB: civicfix }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U civicfix"], interval: 5s, retries: 10 }
+
+  ai:   # optional: remove this service and AI_SERVICE_URL to run without AI
+    build: ./ai-service
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      USE_CLIP: ${USE_CLIP:-0}
+
+  app:
+    build: .
+    depends_on: { db: { condition: service_healthy } }
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgres://civicfix:civicfix@db:5432/civicfix
+      AI_SERVICE_URL: http://ai:8000
+      JWT_SECRET: ${JWT_SECRET:-dev-secret}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@civicfix.dev}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin#12345}
+    ports: ["4000:4000"]
+
+volumes:
+  pgdata:

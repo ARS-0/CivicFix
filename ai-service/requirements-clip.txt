@@ -1,0 +1,3 @@
+# Optional offline vision model (USE_CLIP=1). Adds ~1GB (torch).
+torch
+transformers
