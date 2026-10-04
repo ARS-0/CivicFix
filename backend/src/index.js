@@ -18,7 +18,7 @@ if (!process.env.JWT_SECRET) { console.error('JWT_SECRET is required'); process.
 const app = express();
 const origins = (process.env.FRONTEND_URL || 'http://localhost:3000').split(',').map((s) => s.trim());
 app.set('trust proxy', 1);
-app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({ contentSecurityPolicy: false, referrerPolicy: { policy: 'strict-origin-when-cross-origin' }, crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({ origin: origins }));
 app.use(express.json({ limit: '100kb' }));
 app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHeaders: true }));

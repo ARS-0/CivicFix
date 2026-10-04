@@ -24,7 +24,7 @@ export default function MapView({ points = [], mode = 'markers', value, onPick, 
       await import('leaflet.heat');
       if (dead || !el.current) return;
       const map = L.map(el.current).setView(value ? [value.lat, value.lng] : DEFAULT_CENTER, value ? 17 : 12);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19, subdomains: 'abcd', attribution: '&copy; OpenStreetMap contributors &copy; CARTO' })
       if (mode === 'pick') map.on('click', (e) => cb.current.onPick?.({ lat: e.latlng.lat, lng: e.latlng.lng }));
       S.current = { L, map, fitted: false };
       setReady(true);
